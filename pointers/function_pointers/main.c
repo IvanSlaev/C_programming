@@ -30,7 +30,8 @@ int main (int argc, char *argv[])
 	int product = pointerN(4, 5);
 	printf("Product: %d\n", product);
 	
-	/* using the pointer in function, you can even use different names
+	/* using the function pointers in functions (a.k.a callback funcs), 
+	 * you can even use different names
 	 *  so you declare pointer as an argument and after calling the
 	 * function you can give it  */
 	int commonFunction(int (*point)(int, int))
