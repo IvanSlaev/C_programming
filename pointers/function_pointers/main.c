@@ -34,16 +34,14 @@ int main (int argc, char *argv[])
 	 * you can even use different names
 	 *  so you declare pointer as an argument and after calling the
 	 * function you can give it  */
-	int commonFunction(int (*point)(int, int))
+	void print(int (*point)(int, int))
 	{
 		int a = 4, b = 5;
-		return point(a, b);
+		printf("Sum: %d\n", point(a, b)); 
 	}
 	printf("In function\n");
-	sum = commonFunction(pointer1);
-	printf("Sum: %d\n", sum);
-	product = commonFunction(pointerN);
-	printf("Product: %d\n", product);
+	print(pointer1);
+	print(pointerN);
 	
 	return 0;
 }
