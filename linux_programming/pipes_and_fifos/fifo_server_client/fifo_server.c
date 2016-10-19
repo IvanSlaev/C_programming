@@ -12,13 +12,13 @@ int main (int argc, char *argv[])
 	char readbuff[100];
 	
 	umask(0);
-	mknod(FIFO_FILE, S_IFIFO|0666, 0);
+	mknod(FIFO_FILE, S_IFIFO | 0666, 0);
 	
 	while(1)
 	{
-		file = fopen(FIFO_FILE, "r");
+		file = fopen(FIFO_FILE, "rb");
 		fgets(readbuff, 100, file);
-		printf("Received string: %s", readbuff);
+		printf("Received string: %s\n", readbuff);
 		fclose(file);
 		sleep(10);
 	}
