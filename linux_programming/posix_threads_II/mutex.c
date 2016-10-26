@@ -9,13 +9,16 @@
 static char running = 1;
 static unsigned long counter = 0; /* if not volatile won't work when optimization is turned on */
 static useconds_t micsec = 1000; /* say how much microseconds thread will sleep */
+pthread_mutex_t c_mutex;
 
 /* computational thread */
 void *process(void *arg)
 {
 	while (running)
 	{
+		pthread_mutex_lock(&c_mutex);
 		counter++;
+		pthread_mutex_unlock(&c_mutex);
 		usleep(micsec);
 	}
 	pthread_exit(NULL);
@@ -26,6 +29,7 @@ int main (int argc, char *argv[])
 	int i;
 	pthread_t threadID;
 	void *retval;
+	pthread_mutex_init(&c_mutex, NULL);
 	
 	/*Start up the processing thread. */
 	if (pthread_create(&threadID, NULL, process, "0"))
@@ -35,7 +39,9 @@ int main (int argc, char *argv[])
 	
 	for (i = 0; i < 10; i++)
 	{
+		pthread_mutex_lock(&c_mutex);
 		printf("Counter: %lu, \n", counter);
+		pthread_mutex_unlock(&c_mutex);
 		fflush(stdout);
 		sleep(1);
 	}
