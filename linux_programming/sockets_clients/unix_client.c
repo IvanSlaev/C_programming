@@ -15,7 +15,7 @@ int main (int argc, char *argv[])
 	struct sockaddr_un uaddr;
 	
 	uaddr.sun_family = AF_UNIX;
-	strcpy(uaddr.sun_path, "/tmp/mysocket");
+	strcpy(uaddr.sun_path, argv[1]);
 	
 	if ((sd = socket(PF_UNIX, SOCK_STREAM, 0) < 0))
 	{

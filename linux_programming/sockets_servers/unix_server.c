@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/un.h>
 #include <sys/socket.h>
 #include <errno.h>
@@ -10,13 +11,14 @@
 
 int main (int argc, char *argv[])
 {
-	int sd, cd, rc;
+	int sd, cd, rc, servlen;
 	char message [1024];
 	struct sockaddr_un uaddr;
 	socklen_t alen = sizeof(struct sockaddr_un);
 	
+	unlink("/tmp/mysocket");
 	uaddr.sun_family = AF_UNIX;
-	strcpy(uaddr.sun_path, "/tmp/mysocket");
+	strcpy(uaddr.sun_path, argv[1]);
 	
 	if ((sd = socket(PF_UNIX, SOCK_STREAM, 0) < 0))
 	{
@@ -24,8 +26,10 @@ int main (int argc, char *argv[])
 	}
 	printf("Socket opened\n");
 	
-
-	bind(sd, (struct sockaddr *)&uaddr, sizeof(uaddr));
+	servlen=strlen(uaddr.sun_path) + 
+                     sizeof(uaddr.sun_family);
+	if(bind(sd,(struct sockaddr *)&uaddr,servlen)<0)
+       error("binding socket"); 
 
 	printf("Binded successfully\n");
 	
