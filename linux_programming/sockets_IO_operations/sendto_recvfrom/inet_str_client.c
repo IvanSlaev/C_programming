@@ -14,6 +14,8 @@
 
 int main (int argc, char *argv[])
 {
+	// klnmxfkvm<mvs
+	
 	int sd, msg_len;
 	char message[MSG_LEN];
 	struct sockaddr_in addr;

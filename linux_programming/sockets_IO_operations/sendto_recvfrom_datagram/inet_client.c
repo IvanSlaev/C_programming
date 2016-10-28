@@ -20,14 +20,12 @@ int main (int argc, char *argv[])
 	socklen_t alen = sizeof(struct sockaddr_in);
 	struct hostent *hostent;
 	
-	sd = socket(PF_INET, SOCK_STREAM, 0);
+	sd = socket(PF_INET, SOCK_DGRAM, 0);
 	
 	hostent = gethostbyname(argv[1]);
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons (PORT_NUMBER);
 	memcpy(&addr.sin_addr, hostent->h_addr, hostent->h_length);
-	
-	connect(sd, (struct sockaddr *)&addr, sizeof(addr));
 	
 	msg_len = strlen(fgets(message, MSG_LEN, stdin));
 	sendto(sd, message, MSG_LEN, 0, (struct sockaddr *)&addr, sizeof(addr));

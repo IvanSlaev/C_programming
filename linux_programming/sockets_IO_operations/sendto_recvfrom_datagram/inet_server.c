@@ -14,31 +14,28 @@
 
 int main (int argc, char *argv[])
 {
-	int sd, cd, rc, yes = 1;
+	int sd, rc, yes = 1;
 	char message[MSG_LEN];
-	struct sockaddr_in addr, con_addr;
+	struct sockaddr_in addr;
 	socklen_t alen = sizeof(struct sockaddr_in);
 	
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	addr.sin_port = htons(PORT_NUMBER);
 	
-	sd = socket (PF_INET, SOCK_STREAM, 0);
+	sd = socket (PF_INET, SOCK_DGRAM, 0);
 	
 	setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
 	bind(sd, (struct sockaddr *)&addr, sizeof(addr));
-	listen(sd, 5);
 	
 	for (;;)
 	{
 		printf("Accepting input on port: %d\n", PORT_NUMBER);
-		cd = accept(sd, (struct sockaddr *)&con_addr, &alen);
 		
-		rc = recvfrom(cd, message, sizeof(message), 0, (struct sockaddr *)&con_addr, &alen);
+		rc = recvfrom(sd, message, sizeof(message), 0, (struct sockaddr *)&addr, &alen);
 		printf("Message: %s", message);
 		
 		printf("Receive the end of input\n");
-		close(cd);
 	}
 	
 	close(sd);
