@@ -55,7 +55,7 @@ int main (int argc, char *argv[])
 				assert(byteCount > 0);
 				
 				buffer[byteCount] = '\0';
-				printf("Got data from %s: %s\n", argv[i], buffer);
+				printf("%s", buffer);
 			}
 		}
 	}
