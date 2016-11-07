@@ -10,8 +10,8 @@
 
 int open_queue(key_t keyval)
 {
-	int qid;
-	return qid = msgget(keyval, IPC_CREAT | 0660);
+	int qid = msgget(keyval, IPC_CREAT | 0660);
+	return qid;
 }
 
 int send_message(int qid, struct msgbuf *qbuf)
@@ -44,7 +44,7 @@ int main (int argc, char *argv[])
 	
 	msgkey = ftok("/tmp/msgtool", 'm');
 	
-	if ((qid = open_queue(msgkey) == -1))
+	if ((qid = open_queue(msgkey)) == -1)
 	{
 		DEATH("open msg failed\n");
 	}
@@ -52,7 +52,7 @@ int main (int argc, char *argv[])
 	msg->mtype = 1;
 	strcpy(msg->mtext, message);
 	
-	if (send_message(qid, msg) == -1)
+	if ((send_message(qid, msg)) == -1)
 	{
 		DEATH("send msg failed\n");
 	}
