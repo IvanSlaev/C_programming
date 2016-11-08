@@ -1,0 +1,7 @@
+kernel//home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/SOLUTIONS/s_19/lab1_complete.ko
+kernel//home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/SOLUTIONS/s_19/lab1_excl.ko
+kernel//home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/SOLUTIONS/s_19/lab1_semaphore.ko
+kernel//home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/SOLUTIONS/s_19/lab1_semaphore_rw.ko
+kernel//home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/SOLUTIONS/s_19/lab1_wait_event.ko
+kernel//home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/SOLUTIONS/s_19/lab2_killable.ko
+kernel//home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/SOLUTIONS/s_19/lab3_poll.ko
