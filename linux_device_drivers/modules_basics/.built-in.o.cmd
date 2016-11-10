@@ -1,1 +1,0 @@
-cmd_/home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/modules_basics/built-in.o :=  rm -f /home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/modules_basics/built-in.o; ar rcsD /home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/modules_basics/built-in.o
