@@ -1,0 +1,43 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:4
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <stdlib.h>
+        -:    3:
+function main called 4 returned 100% blocks executed 100%
+        4:    4:int main(int argc, const char *argv[])
+        -:    5: 
+        -:    6:{
+        4:    7:	int upper_limit = 20;
+        -:    8:	int i;
+        -:    9:
+        4:   10:	if (argc > 1) 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:   11:	{
+        4:   12:		upper_limit = atoi(argv[1]);
+call    0 returned 100%
+        -:   13:	}
+        -:   14:
+       24:   15:	for(i = 0; i < upper_limit; i++)
+branch  0 taken 83%
+branch  1 taken 17% (fallthrough)
+        -:   16:	{
+       20:   17:		if (i < upper_limit / 2) 
+branch  0 taken 50% (fallthrough)
+branch  1 taken 50%
+        -:   18:		{
+       10:   19:			printf("%s\n", "lower");
+call    0 returned 100%
+        -:   20:		}
+        -:   21:		else
+        -:   22:		{
+       10:   23:			printf("%s\n", "upper");
+call    0 returned 100%
+        -:   24:		}
+        -:   25:	}
+        -:   26:
+        4:   27:	return 0;
+        -:   28:}

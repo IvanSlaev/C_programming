@@ -37,6 +37,5 @@ int main(int argc, const char *argv[])
 	printf("%s%d: %d\n", "Prime numbers within ", upper_limit, numberOfPrimes);
 	printf("%s%lf s.\n", "Calculated in: ",(double)((double)clock() - t)/CLOCKS_PER_SEC);
 	printf("never_executed = %d, must be 0\n", never_executed);
-	printf("%s\n", "*********************************************************");
 	return 0;
 }
