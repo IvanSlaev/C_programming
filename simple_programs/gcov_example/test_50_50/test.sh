@@ -17,7 +17,7 @@ while [ $COUNTER -lt 4 ]; do
 	echo
 done
 
-#rm main main.gcda main.gcno main.c.gcov
+rm main main.gcda main.gcno main.c.gcov
 echo "main removed"
 echo "main.c.gcov removed"
 echo "main.gcda removed"
