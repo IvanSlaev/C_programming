@@ -1,2 +1,0 @@
-/home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/exporting_licensing_loading/duplicating/module_1_same.ko
-/home/users/islaev/maz/c_programs/C_programming/linux_device_drivers/exporting_licensing_loading/duplicating/module_1_same.o

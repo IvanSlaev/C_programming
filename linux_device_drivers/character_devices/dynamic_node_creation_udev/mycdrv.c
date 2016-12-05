@@ -62,11 +62,12 @@ static const struct file_operations my_fops = {
 
 static int __init my_init(void)
 {
-	if (alloc_chrdev_region(&first, 0, count, MYDEV) < 0) 
+	if (alloc_chrdev_region(&first, 0, count, MYDEV) < 0)
 	{
-		printk(KERN_ERR "%s\n", "failed to allocate character device region");
+		printk(KERN_INFO "Region allocation failed\n");
 		return -1;
 	}
+
 	if (!(my_cdev = cdev_alloc())) 
 	{
 		printk(KERN_ERR "%s\n", "cdev_alloc() failed");
