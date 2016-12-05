@@ -31,6 +31,17 @@ static ssize_t my_write(struct file *file, const char __user *buf, size_t lbuf, 
 	printk(KERN_INFO "ntimers upped to %d\n", atomic_read(&ntimers));
 	tl = (struct timer_list *)kmalloc(sizeof(struct timer_list), GFP_KERNEL);
 	printk(KERN_INFO "Entering the write function\n");
+	printk(KERN_INFO "my current task pid is %d\n", (int)current->pid);
+	init_timer(tl);
+	tl->function = my_timer_function;
+	tl->expires = jiffies + 4 * HZ; //four seconds delay
+	mdata = (struct my_dat *)kmalloc(sizeof(struct timer_list), GFP_KERNEL);
+	tl->data = (unsigned long)mdata;
+	mdata->l = len;
+	mdata->tl = tl;
+	printk(KERN_INFO "Adding timer at jiffies = %ld\n", jiffies);
+	add_timer(tl);
+	len += 100;
 	return lbuf;
 }
 
@@ -42,14 +53,25 @@ static const struct file_operations my_fops = {
 	.release = my_generic_release,
 };
 
+static int __init my_init(void)
+{
+	atomic_set(&ntimers, 0);
+	return my_generic_init();
+}
+
 static void __exit my_exit(void)
 {
-	// delete any running timers
-	printk(KERN_INFO "Delete timer rc = %d\n", del_timer_sync(&my_timer));
+	// wait for all timers to finish
+	printk(KERN_INFO "ntimers in remove routine to %d\n", atomic_read(&ntimers));
+	while (atomic_read(&ntimers)) 
+	{
+		printk(KERN_INFO "sleeping, ntimers still %d\n", atomic_read(&ntimers));
+		msleep(1000); //wait a second
+	}
 	my_generic_exit();
 }
 
-module_init(my_generic_init);
+module_init(my_init);
 module_exit(my_exit);
 
 MODULE_AUTHOR("Jerry Cooperstein (changes by IvanSlaev)");
