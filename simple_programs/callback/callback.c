@@ -1,23 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void CallingFunction(int (*numberSource)()) {
-	printf("sum: %d\n", numberSource() + numberSource());
+void calling_function(int (*callback_function)()) {
+	printf("sum: %d\n", callback_function() + callback_function());
 }
 
-int FirstNumber()
+int first_callback()
 {
 	return 5000;
 }
 
-int SecondNumber()
+int second_callback()
 {
 	return 2500;
 }
 
 int main()
 {
-	CallingFunction(&FirstNumber);
-	CallingFunction(&SecondNumber);
+	// You can call it as you wish, because
+	// my_func(...) == my_func == &my_func(...) == &my_func when no argumets to callback functions
+	calling_function(&first_callback);
+	calling_function(first_callback);
+	
+	// same for any other function taking no arguments and returning int (in this example)
+	calling_function(&second_callback);
+	calling_function(second_callback);
 	return 0;
 }
