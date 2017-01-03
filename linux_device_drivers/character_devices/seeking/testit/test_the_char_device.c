@@ -9,8 +9,8 @@
 
 int main(int argc, const char *argv[])
 {
-	int length = 20, position = 0, fd, rc;
-	char *message, *nodename = "/dev/mycdrv";
+	int length = 20, position = 3, fd, rc;
+	char *message, *nodename = "/dev/mycdev";
 
 // the message
 	message = malloc(length);

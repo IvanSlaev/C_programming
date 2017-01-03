@@ -9,5 +9,5 @@ static int __init my_init(void)
 
 module_init(my_init);
 
-MODULE_AUTHOR("Ivan Slaev)");
+MODULE_AUTHOR("Ivan Slaev");
 MODULE_LICENSE("GPL");

@@ -140,6 +140,7 @@ static void __exit my_exit(void)
 	{
 		kfree(kbuf);
 	}
+	unregister_chrdev_region(first, count);
 	printk(KERN_INFO "%s\n", "DEVICE UNREGISTERED");
 }
 
