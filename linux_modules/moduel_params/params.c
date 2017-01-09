@@ -7,6 +7,11 @@
 #include <linux/init.h>
 #include <linux/stat.h>
 
+
+rsync -avz -e ssh acholakov@172.20.1.36:/media/acholakov/95625588-7a89-4d2d-9510-8d8bb60972a3/truecrypt/testos ./
+
+
+
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Peter Jay Salzman");
 
