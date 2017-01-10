@@ -1,4 +1,4 @@
 CFLAGS = -g
 
-main: main.c
+callback: callback.c
 	gcc $< -o $@ $(CFLAGS)

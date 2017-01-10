@@ -1,4 +1,4 @@
 CFLAGS = -g
 
-main: main.c
+static: static.c
 	gcc $< -o $@ $(CFLAGS)
