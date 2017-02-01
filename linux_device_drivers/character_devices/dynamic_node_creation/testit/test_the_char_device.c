@@ -5,8 +5,6 @@
 #include <fcntl.h>
 #include <string.h>
 
-#define DEATH(mess) { perror(mess); exit(errno); }
-
 int main(int argc, const char *argv[])
 {
 	int length, fd1, fd2, rc;
@@ -17,14 +15,12 @@ int main(int argc, const char *argv[])
 
 	fd1 = open(nodename, O_RDWR);
 	printf("%s%d\n", "first open file descriptor:", fd1);
-	fd2 = open(nodename, O_RDWR);
-	printf("%s%d\n", "second open file descriptor:", fd1);
 	
 	rc = write(fd1, message, length);
 	printf("%s%d%s%d\n", "return from write:", rc, " on file descriptor:", fd1);
 	memset(message, 0, length);
 	
-	rc = read(fd2, message, length);
+	rc = read(fd1, message, length);
 	printf("%s%d%s%d\n", "return from read:", rc, " on file descriptor:", fd2);
 	printf("%s%s\n", "Message:", message);
 	return 0;

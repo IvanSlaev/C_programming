@@ -11,7 +11,7 @@ int main(int argc, const char *argv[])
 {
 	int length, fd1, fd2, rc;
 	const char *nodename = "/dev/mycdrv";
-	char message[] = "THIS MESSAGE IS USED AS TEST FOR THE CHARACTER DRIVER";
+	char message[] = "THIa MESSaGE IS USED aS TEST FOR THE CHARACTER DRIVER";
 
 	length = sizeof(message);
 

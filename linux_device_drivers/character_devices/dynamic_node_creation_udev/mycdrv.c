@@ -6,15 +6,25 @@
 #include <linux/cdev.h>
 #include <linux/device.h>
 
-#define DEATH(mess) { perror(mess); exit(errno); }
 #define MYDEV "mycdev"
-#define KBUF_SIZE (size_t)(10 + PAGE_SIZE)
+#define MAX_SIZE 33
 
-static char *kbuf;
+static char kbuf[MAX_SIZE];
 static dev_t first;
 static unsigned int count = 1;
 static struct cdev *my_cdev;
 static struct class *my_class; 
+
+static void parse_buffer(void)
+{
+	int i;
+
+	for (i = 0; kbuf[i] != '\0' && i < MAX_SIZE - 1; i++) {
+		if (kbuf[i] == 'a') {
+			kbuf[i] = 'z';
+		}
+	}
+}
 
 static int my_open(struct inode *inode, struct file *file)
 {
@@ -38,17 +48,23 @@ static int my_release(struct inode *inode, struct file *file)
 
 static ssize_t my_read(struct file *file, char __user *buf, size_t lbuf, loff_t *ppos)
 {
-	int nbytes = lbuf - copy_to_user(buf, kbuf + *ppos, lbuf);
-	*ppos += nbytes;
-	printk(KERN_INFO "\n READING nbytes:%d, position: %d\n", nbytes, (int)*ppos);
+	int nbytes;
+
+	nbytes = copy_to_user(buf, kbuf, MAX_SIZE - 1);
+	printk(KERN_INFO "\n READING nbytes:%d, kbuf %s\n", nbytes, kbuf);
 	return nbytes;
 }
 
 static ssize_t my_write(struct file *file,const char __user *buf, size_t lbuf, loff_t *ppos)
 {
-	int nbytes = lbuf - copy_from_user(kbuf + *ppos, buf, lbuf);
-	*ppos += nbytes;
+	int nbytes;
+
+	if (lbuf > MAX_SIZE - 1)
+		pr_info("User message is longer than 32 characters. The chars after the 32th one will be discarted"); 
+
+	nbytes = copy_from_user(kbuf, buf, MAX_SIZE - 1);	
 	printk(KERN_INFO "\n WRITING nbytes:%d, position: %d\n", nbytes, (int)*ppos);
+	parse_buffer();
 	return nbytes;
 }
 
@@ -62,6 +78,8 @@ static const struct file_operations my_fops = {
 
 static int __init my_init(void)
 {
+	memset(kbuf, '\0', MAX_SIZE);
+
 	if (alloc_chrdev_region(&first, 0, count, MYDEV) < 0)
 	{
 		printk(KERN_INFO "Region allocation failed\n");
@@ -75,7 +93,7 @@ static int __init my_init(void)
 		return -1;
 	}	
 	cdev_init(my_cdev, &my_fops);
-	kbuf = kmalloc(KBUF_SIZE, GFP_KERNEL);
+	memset(kbuf, '\0', 30);
 	if (cdev_add(my_cdev, first, count) < 0) 
 	{
 		printk(KERN_ERR "%s\n", "cdev_add failed");
@@ -95,14 +113,10 @@ static int __init my_init(void)
 
 static void __exit my_exit(void)
 {
-	if (my_cdev) 
-	{
-		cdev_del(my_cdev);
-	}
-	if (kbuf) 
-	{
-		kfree(kbuf);
-	}
+	device_destroy(my_class, first);
+	class_unregister(my_class);
+	class_destroy(my_class);
+	unregister_chrdev_region(first, count);
 	printk(KERN_INFO "%s\n", "DEVICE UNREGISTERED");
 }
 
