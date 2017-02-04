@@ -1,0 +1,9 @@
+In order to test the device drivers, please note that first you should
+create the node in yout /dev/ dir. Also the node must be created with the
+specific major and minor numbers. While loading the device driver will obtain them dynamically. All you have to do is to issue 'dmesg' to find them. In most cases minor will be 0. 
+Then use shell command:
+sudo mknod /dev/mycdrv c "major" 0
+Now you have a character special file /dev/mycdrv. Test if operation 
+successfull with:
+stat /dev/mycdrv
+And you are ready to run the '$ sudo ./test'.
