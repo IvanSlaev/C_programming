@@ -4,7 +4,7 @@
 #include <linux/uaccess.h>
 #include <linux/slab.h>
 #include <linux/cdev.h>
-#include <linux/device.h>
+#include <sys/mman.h>
 
 #define MYDEV "mycdev"
 #define MAX_SIZE 33
