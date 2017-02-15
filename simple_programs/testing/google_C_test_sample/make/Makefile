@@ -17,12 +17,12 @@
 GTEST_DIR = /home/users/islaev/googletest/googletest
 
 # Where to find user code.
-USER_DIR = ../sample
+USER_DIR = ../sample/
 
 # Flags passed to the preprocessor.
 # Set Google Test's header directory as a system directory, such that
 # the compiler doesn't generate warnings in Google Test headers.
-CPPFLAGS += -isystem $(GTEST_DIR)/include
+CPPFLAGS += --coverage -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread
@@ -35,6 +35,9 @@ TESTS = sample1_unittest
 # definition.
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
                 $(GTEST_DIR)/include/gtest/internal/*.h
+
+# Static linker flags
+ARFLAGS = -rv
 
 # House-keeping build targets.
 
@@ -71,12 +74,23 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-sample1.o : $(USER_DIR)/sample1.c $(USER_DIR)/sample1.h $(GTEST_HEADERS)
+sample1_for_lib.o: $(USER_DIR)sample1_for_lib.c
+	gcc $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)sample1_for_lib.c
+
+sample1.o : $(USER_DIR)/sample1.c $(USER_DIR)/sample1_for_lib.h sample1_for_lib.o $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample1.c
 
-sample1_unittest.o : $(USER_DIR)/sample1_unittest.cc \
-                     $(USER_DIR)/sample1.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample1_unittest.cc
+sample1.a: sample1.o
+	$(AR) $(ARFLAGS) $@ $^
 
-sample1_unittest : sample1.o sample1_unittest.o gtest_main.a
+#sample1_unittest.o : $(USER_DIR)/sample1_unittest.cc \
+                     $(USER_DIR)/sample1.h $(GTEST_HEADERS)
+#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample1_unittest.cc
+
+# sample1_unittest : sample1.a sample1_unittest.o gtest_main.a
+# 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+sample1_unittest : ../sample/sample1_unittest.cc sample1.a gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+

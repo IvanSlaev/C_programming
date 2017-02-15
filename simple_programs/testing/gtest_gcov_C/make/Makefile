@@ -16,6 +16,8 @@
 # Remember to tweak this if you move this file.
 GTEST_DIR = /home/users/islaev/googletest/googletest
 
+SRC_DIR = /home/users/islaev/C_programming/simple_programs/testing/gtest_gcov_C/sample/
+
 # Flags passed to the preprocessor.
 # Set Google Test's header directory as a system directory, such that
 # the compiler doesn't generate warnings in Google Test headers.
@@ -68,12 +70,12 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-sample1.o : sample1.c sample1.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c sample1.c
+sample1.o : $(SRC_DIR)sample1.c $(SRC_DIR)sample1.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)sample1.c
 
-sample1_unittest.o : sample1_unittest.cc \
-                     sample1.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c sample1_unittest.cc
+sample1_unittest.o : $(SRC_DIR)sample1_unittest.cc \
+                     $(SRC_DIR)sample1.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)sample1_unittest.cc
 
 sample1_unittest : sample1.o sample1_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@

@@ -2,7 +2,7 @@
 #include <math.h>
 #include "prime_count.h"
 
-int GetCountOfPrimeNumbersWithin(int upper_limit)
+int GetPrimeNumbers(int upper_limit)
  
 {
 	int numberOfPrimes = 0;

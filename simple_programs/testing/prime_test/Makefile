@@ -22,7 +22,7 @@ USER_DIR = ./program
 # Flags passed to the preprocessor.
 # Set Google Test's header directory as a system directory, such that
 # the compiler doesn't generate warnings in Google Test headers.
-CPPFLAGS += -isystem $(GTEST_DIR)/include
+CPPFLAGS += --coverage -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread
@@ -71,11 +71,13 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-prime_count.o : $(USER_DIR)/prime_count.c $(USER_DIR)/prime_count.h $(GTEST_HEADERS)
-	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/prime_count.c
+prime_count.o : $(USER_DIR)/prime_count.c \
+		$(GTEST_HEADERS)
+	gcc $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/prime_count.c
 
 unit_test.o : $(USER_DIR)/unit_test.cc \
-                     $(USER_DIR)/prime_count.h $(GTEST_HEADERS)
+                     $(USER_DIR)/prime_count.h \
+		     $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/unit_test.cc
 
 unit_test : prime_count.o unit_test.o gtest_main.a

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rm *.o *.a
+rm gtest* *.o sample* *.gcov

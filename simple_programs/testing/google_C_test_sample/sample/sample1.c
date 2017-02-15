@@ -31,14 +31,11 @@
 //
 // Author: wan@google.com (Zhanyong Wan)
 
-#include "sample1.h"
+#include "sample1_for_lib.h"
 
 // Returns n! (the factorial of n).  For negative n, n! is defined to be 1.
-int Factorial(int n) {
-  int i, result = 1;
-  for (i = 1; i <= n; i++) {
-    result *= i;
-  }
+extern "C" int get_factorial(int n);
 
-  return result;
+int Factorial(int n) {
+    return get_factorial(n);
 }
