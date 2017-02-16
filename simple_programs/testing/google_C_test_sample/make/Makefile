@@ -77,18 +77,11 @@ gtest_main.a : gtest-all.o gtest_main.o
 sample1_for_lib.o: $(USER_DIR)sample1_for_lib.c
 	gcc $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)sample1_for_lib.c
 
-sample1.o : $(USER_DIR)/sample1.c $(USER_DIR)/sample1_for_lib.h sample1_for_lib.o $(GTEST_HEADERS)
+sample1.o : $(USER_DIR)/sample1.c $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample1.c
 
-sample1.a: sample1.o
+sample1.a: sample1.o sample1_for_lib.o
 	$(AR) $(ARFLAGS) $@ $^
-
-#sample1_unittest.o : $(USER_DIR)/sample1_unittest.cc \
-                     $(USER_DIR)/sample1.h $(GTEST_HEADERS)
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample1_unittest.cc
-
-# sample1_unittest : sample1.a sample1_unittest.o gtest_main.a
-# 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 sample1_unittest : ../sample/sample1_unittest.cc sample1.a gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@

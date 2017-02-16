@@ -75,10 +75,13 @@ prime_count.o : $(USER_DIR)/prime_count.c \
 		$(GTEST_HEADERS)
 	gcc $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/prime_count.c
 
+prime_count.a: prime_count.o
+	$(AR) $(ARFLAGS) $@ $^
+
 unit_test.o : $(USER_DIR)/unit_test.cc \
                      $(USER_DIR)/prime_count.h \
 		     $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/unit_test.cc
 
-unit_test : prime_count.o unit_test.o gtest_main.a
+unit_test : prime_count.a unit_test.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@

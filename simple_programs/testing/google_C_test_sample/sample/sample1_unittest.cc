@@ -44,9 +44,8 @@
 // Don't forget gtest.h, which declares the testing framework.
 
 #include <limits.h>
-#include "sample1.h"
+#include "../sample/sample1.h"
 #include "gtest/gtest.h"
-
 
 // Step 2. Use the TEST macro to define your tests.
 //
@@ -71,8 +70,11 @@
 // that their results don't depend on their order.
 //
 // </TechnicalDetails>
-
-
+/*
+extern "C" {
+	int get_factorial(int);
+}
+*/
 // Tests Factorial().
 
 // Tests factorial of negative numbers.
