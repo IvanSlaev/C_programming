@@ -1,3 +1,0 @@
-/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API2/gpio_API.ko
-/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API2/gpio_API.o
-
