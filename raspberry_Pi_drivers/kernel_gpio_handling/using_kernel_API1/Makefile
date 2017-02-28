@@ -1,6 +1,6 @@
 obj-m := gpio_API.o
 
-CROSS_COMP := ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
+CROSS_COMP := ARCH=arm CROSS_COMPILE=~/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-
 KDIR := ~/raspberrypi/linux
 PWD := $(shell pwd)
 
