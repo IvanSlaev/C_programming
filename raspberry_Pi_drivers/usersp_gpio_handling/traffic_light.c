@@ -20,7 +20,7 @@
 #define GET_GPIO(g) (*(gpio + 13) >> g) & 1
 
 #define RED 17
-#define GREEN 22
+#define GREEN 27
 
 #define BUTTON 18
 
