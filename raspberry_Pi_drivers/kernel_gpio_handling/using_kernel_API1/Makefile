@@ -1,7 +1,7 @@
 obj-m := gpio_API.o
 
 CROSS_COMP := ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
-KDIR := ~/linux/include/config/build
+KDIR := ~/raspberrypi/linux
 PWD := $(shell pwd)
 
 default:

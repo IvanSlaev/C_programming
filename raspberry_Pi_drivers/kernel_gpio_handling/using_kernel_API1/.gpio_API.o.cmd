@@ -1,8 +1,8 @@
-cmd_/home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API/gpio_API.o := arm-linux-gnueabihf-gcc -Wp,-MD,/home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API/.gpio_API.o.d  -nostdinc -isystem /home/users/islaev/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/../lib/gcc/arm-linux-gnueabihf/4.8.3/include -I./arch/arm/include -I./arch/arm/include/generated/uapi -I./arch/arm/include/generated  -I./include -I./arch/arm/include/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-PIE -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -fno-ipa-sra -mabi=aapcs-linux -mno-thumb-interwork -mfpu=vfp -funwind-tables -marm -D__LINUX_ARM_ARCH__=7 -march=armv7-a -msoft-float -Uarm -fno-delete-null-pointer-checks -O2 -Wno-maybe-uninitialized --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -DCC_HAVE_ASM_GOTO  -DMODULE  -DKBUILD_BASENAME='"gpio_API"'  -DKBUILD_MODNAME='"gpio_API"' -c -o /home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API/.tmp_gpio_API.o /home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API/gpio_API.c
+cmd_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API1/gpio_API.o := arm-linux-gnueabihf-gcc -Wp,-MD,/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API1/.gpio_API.o.d  -nostdinc -isystem /home/users/islaev/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/../lib/gcc/arm-linux-gnueabihf/4.8.3/include -I./arch/arm/include -I./arch/arm/include/generated/uapi -I./arch/arm/include/generated  -I./include -I./arch/arm/include/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-PIE -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -fno-ipa-sra -mabi=aapcs-linux -mno-thumb-interwork -mfpu=vfp -funwind-tables -marm -D__LINUX_ARM_ARCH__=7 -march=armv7-a -msoft-float -Uarm -fno-delete-null-pointer-checks -O2 -Wno-maybe-uninitialized --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -DCC_HAVE_ASM_GOTO  -DMODULE  -DKBUILD_BASENAME='"gpio_API"'  -DKBUILD_MODNAME='"gpio_API"' -c -o /home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API1/.tmp_gpio_API.o /home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API1/gpio_API.c
 
-source_/home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API/gpio_API.o := /home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API/gpio_API.c
+source_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API1/gpio_API.o := /home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API1/gpio_API.c
 
-deps_/home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API/gpio_API.o := \
+deps_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API1/gpio_API.o := \
   include/linux/module.h \
     $(wildcard include/config/modules.h) \
     $(wildcard include/config/sysfs.h) \
@@ -64,7 +64,7 @@ deps_/home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/
     $(wildcard include/config/mmu.h) \
     $(wildcard include/config/prove/locking.h) \
     $(wildcard include/config/panic/timeout.h) \
-  /home/users/islaev/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/lib/gcc/arm-linux-gnueabihf/4.8.3/include/stdarg.h \
+  /home/users/islaev/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/lib/gcc/arm-linux-gnueabihf/4.8.3/include/stdarg.h \
   include/linux/linkage.h \
   include/linux/stringify.h \
   include/linux/export.h \
@@ -446,6 +446,6 @@ deps_/home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/
     $(wildcard include/config/modules/use/elf/rel.h) \
     $(wildcard include/config/modules/use/elf/rela.h) \
 
-/home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API/gpio_API.o: $(deps_/home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API/gpio_API.o)
+/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API1/gpio_API.o: $(deps_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API1/gpio_API.o)
 
-$(deps_/home/users/islaev/C_programming/Raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API/gpio_API.o):
+$(deps_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/using_kernel_API1/gpio_API.o):
