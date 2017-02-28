@@ -1,4 +1,4 @@
-obj-m := gpio_API.o
+obj-m := traffic_light.o
 
 CROSS_COMP := ARCH=arm CROSS_COMPILE=~/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-
 KDIR := ~/raspberrypi/linux

@@ -1,4 +1,4 @@
-obj-m := gpio_API.o
+obj-m := module_name_here.o
 
 KDIR := ~/linux
 PWD := $(shell pwd)
