@@ -18,16 +18,22 @@ static const struct modversion_info ____versions[]
 __used
 __attribute__((section("__versions"))) = {
 	{ 0xc2e59015, __VMLINUX_SYMBOL_STR(module_layout) },
+	{ 0x6b06fdce, __VMLINUX_SYMBOL_STR(delayed_work_timer_fn) },
+	{ 0x8c03d20c, __VMLINUX_SYMBOL_STR(destroy_workqueue) },
+	{ 0xa0744ea9, __VMLINUX_SYMBOL_STR(cancel_delayed_work_sync) },
 	{ 0xfe990052, __VMLINUX_SYMBOL_STR(gpio_free) },
+	{ 0x85d472aa, __VMLINUX_SYMBOL_STR(queue_delayed_work_on) },
+	{ 0x43a53735, __VMLINUX_SYMBOL_STR(__alloc_workqueue_key) },
+	{ 0x7f175454, __VMLINUX_SYMBOL_STR(gpiod_direction_input) },
+	{ 0xa364e22, __VMLINUX_SYMBOL_STR(gpiod_direction_output_raw) },
+	{ 0x47229b5c, __VMLINUX_SYMBOL_STR(gpio_request) },
+	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
 	{ 0x2e5810c6, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr1) },
 	{ 0xf9a482f9, __VMLINUX_SYMBOL_STR(msleep) },
 	{ 0x68b76f37, __VMLINUX_SYMBOL_STR(gpiod_set_raw_value) },
 	{ 0x1e9b7617, __VMLINUX_SYMBOL_STR(gpiod_get_raw_value) },
-	{ 0x7f175454, __VMLINUX_SYMBOL_STR(gpiod_direction_input) },
-	{ 0xa364e22, __VMLINUX_SYMBOL_STR(gpiod_direction_output_raw) },
 	{ 0x9424dfc3, __VMLINUX_SYMBOL_STR(gpio_to_desc) },
-	{ 0x47229b5c, __VMLINUX_SYMBOL_STR(gpio_request) },
-	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
+	{ 0xb1ad28e0, __VMLINUX_SYMBOL_STR(__gnu_mcount_nc) },
 };
 
 static const char __module_depends[]
@@ -36,4 +42,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "8BE03650D4EE6BB40CCCA5F");
+MODULE_INFO(srcversion, "D54132BD9EF2C310A8C97F9");

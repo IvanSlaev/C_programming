@@ -3,12 +3,42 @@
 #include <linux/init.h>
 #include <linux/gpio.h>
 #include <linux/delay.h>
+#include <linux/workqueue.h>
 
 #define RED 17
 #define BUTTON 18
 #define GREEN 27
+#define WQ_NAME "led_work_queue"
+#define WQ_HZ_DELAY HZ/10
+/*
+static struct gpio red_led_struct;
+static struct gpio green_led_struct;
+static struct gpio button_struct;
+*/
+static void work_handler(struct work_struct *work);
 
-static int __init params_init(void)
+static struct workqueue_struct *led_wq;
+static DECLARE_DELAYED_WORK(led_w, work_handler);
+
+static void work_handler(struct work_struct *work)
+{
+	int ret;
+
+	while (1) {
+		ret = gpio_get_value(BUTTON);
+		if (ret) {
+			gpio_set_value(RED, 1);
+			msleep(1000);
+			gpio_set_value(RED, 0);
+			msleep(500);
+			gpio_set_value(GREEN, 1);
+			msleep(1000);
+			gpio_set_value(GREEN, 0);
+		}
+	}
+}
+ 
+static int __init my_init(void)
 {
 	int ret;
 	pr_info("Module Raspberry Pi\n");
@@ -41,22 +71,22 @@ static int __init params_init(void)
 		pr_err("gpio_direction_output GPIO %d failed\n", GREEN);
 	}
 
-	while (1) {
-		ret = gpio_get_value(BUTTON);
-		if (ret) {
-			gpio_set_value(RED, 1);
-			msleep(1000);
-			gpio_set_value(RED, 0);
-			msleep(500);
-			gpio_set_value(GREEN, 1);
-			msleep(1000);
-			gpio_set_value(GREEN, 0);
+	led_wq = create_singlethread_workqueue(WQ_NAME);
+	if (led_wq) {
+		pr_err("WQ created\n");
+		ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
+		if (!ret) {
+			pr_err("work initialization failed\n");
 		}
+	} else {
+		pr_err("No workqueue created\n");
 	}
+
+
 	return 0;
 }
 
-static void __exit params_exit(void)
+static void __exit my_exit(void)
 {
 	gpio_set_value(RED, 0);
 	gpio_set_value(GREEN, 0);
@@ -64,11 +94,15 @@ static void __exit params_exit(void)
 	gpio_free(RED);
 	gpio_free(BUTTON);
 	gpio_free(GREEN);
+
+	cancel_delayed_work_sync(&led_w);
+	destroy_workqueue(led_wq);
+
 	printk(KERN_INFO "Goodbye, Module Raspberry P\n");
 }
 
-module_init(params_init);
-module_exit(params_exit);
+module_init(my_init);
+module_exit(my_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Ivan Slaev");
