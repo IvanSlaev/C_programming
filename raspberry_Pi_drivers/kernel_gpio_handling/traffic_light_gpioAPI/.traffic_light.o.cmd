@@ -765,6 +765,19 @@ deps_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/
     $(wildcard include/config/gpio/sysfs.h) \
   include/linux/delay.h \
   arch/arm/include/asm/delay.h \
+  include/linux/interrupt.h \
+    $(wildcard include/config/irq/forced/threading.h) \
+    $(wildcard include/config/generic/irq/probe.h) \
+  include/linux/hardirq.h \
+  include/linux/ftrace_irq.h \
+    $(wildcard include/config/ftrace/nmi/enter.h) \
+    $(wildcard include/config/hwlat/tracer.h) \
+  include/linux/vtime.h \
+  include/linux/context_tracking_state.h \
+    $(wildcard include/config/context/tracking.h) \
+  include/linux/static_key.h \
+  arch/arm/include/asm/hardirq.h \
+  include/linux/irq_cpustat.h \
 
 /home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.o: $(deps_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.o)
 

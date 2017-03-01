@@ -4,6 +4,9 @@
 #include <linux/gpio.h>
 #include <linux/delay.h>
 #include <linux/workqueue.h>
+#include <linux/irq.h>
+#include <linux/interrupt.h>
+#include <linux/irqreturn.h>
 
 #define RED 17
 #define BUTTON 18
@@ -15,6 +18,9 @@ static struct gpio red_led_struct;
 static struct gpio green_led_struct;
 static struct gpio button_struct;
 */
+
+static int irq;
+
 static void work_handler(struct work_struct *work);
 
 static struct workqueue_struct *led_wq;
@@ -39,6 +45,26 @@ static void work_handler(struct work_struct *work)
 	}
 }
  
+static irqreturn_t irq_handler_gpio(int irq, void *dev_id)
+{
+	int ret;
+
+	led_wq = create_singlethread_workqueue(WQ_NAME);
+	if (led_wq) {
+		pr_info("WQ created\n");
+		ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
+		if (!ret) {
+			pr_err("work initialization failed\n");
+			return IRQ_NONE;
+		}
+	} else {
+		pr_err("No workqueue created\n");
+		return IRQ_NONE;
+	}
+	
+	return IRQ_HANDLED;
+}
+
 static int __init my_init(void)
 {
 	int ret;
@@ -72,15 +98,14 @@ static int __init my_init(void)
 		pr_err("gpio_direction_output GPIO %d failed\n", GREEN);
 	}
 
-	led_wq = create_singlethread_workqueue(WQ_NAME);
-	if (led_wq) {
-		pr_info("WQ created\n");
-		ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
-		if (!ret) {
-			pr_err("work initialization failed\n");
-		}
-	} else {
-		pr_err("No workqueue created\n");
+	irq = gpio_to_irq(BUTTON);
+	if (!irq) {
+		pr_err("gpio_to_irq failed \n");
+	}	
+
+	ret = request_irq(irq, irq_handler_gpio, IRQF_ONESHOT, "button", NULL);
+	if (ret) {
+		pr_err("irq request failed\n");
 	}
 
 	return 0;
@@ -100,8 +125,10 @@ static void __exit my_exit(void)
 	pr_info("before workq destroy\n");
 
 	destroy_workqueue(led_wq);
+	pr_info("before freeing irq\n");
+	free_irq(irq, NULL);
 
-	printk(KERN_INFO "Goodbye, Module Raspberry P\n");
+	pr_info("Goodbye, Module Raspberry Pi\n");
 }
 
 module_init(my_init);
