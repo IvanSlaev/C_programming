@@ -34,6 +34,7 @@ static void work_handler(struct work_struct *work)
 			gpio_set_value(GREEN, 1);
 			msleep(1000);
 			gpio_set_value(GREEN, 0);
+			break;
 		}
 	}
 }
