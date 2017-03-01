@@ -73,7 +73,7 @@ static int __init my_init(void)
 
 	led_wq = create_singlethread_workqueue(WQ_NAME);
 	if (led_wq) {
-		pr_err("WQ created\n");
+		pr_info("WQ created\n");
 		ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
 		if (!ret) {
 			pr_err("work initialization failed\n");
@@ -82,20 +82,22 @@ static int __init my_init(void)
 		pr_err("No workqueue created\n");
 	}
 
-
 	return 0;
 }
 
 static void __exit my_exit(void)
 {
-	gpio_set_value(RED, 0);
-	gpio_set_value(GREEN, 0);
-
+	pr_info("before free red\n");
 	gpio_free(RED);
+	pr_info("before free button\n");
 	gpio_free(BUTTON);
+	pr_info("before free green\n");
 	gpio_free(GREEN);
+	pr_info("before work delay cancel\n");
 
 	cancel_delayed_work_sync(&led_w);
+	pr_info("before workq destroy\n");
+
 	destroy_workqueue(led_wq);
 
 	printk(KERN_INFO "Goodbye, Module Raspberry P\n");
