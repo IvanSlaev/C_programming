@@ -24,13 +24,13 @@ __attribute__((section("__versions"))) = {
 	{ 0xa0744ea9, __VMLINUX_SYMBOL_STR(cancel_delayed_work_sync) },
 	{ 0xfe990052, __VMLINUX_SYMBOL_STR(gpio_free) },
 	{ 0xd6b8e852, __VMLINUX_SYMBOL_STR(request_threaded_irq) },
+	{ 0x43a53735, __VMLINUX_SYMBOL_STR(__alloc_workqueue_key) },
 	{ 0xdea73ded, __VMLINUX_SYMBOL_STR(gpiod_to_irq) },
 	{ 0x7f175454, __VMLINUX_SYMBOL_STR(gpiod_direction_input) },
 	{ 0xa364e22, __VMLINUX_SYMBOL_STR(gpiod_direction_output_raw) },
 	{ 0x47229b5c, __VMLINUX_SYMBOL_STR(gpio_request) },
-	{ 0x85d472aa, __VMLINUX_SYMBOL_STR(queue_delayed_work_on) },
 	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
-	{ 0x43a53735, __VMLINUX_SYMBOL_STR(__alloc_workqueue_key) },
+	{ 0x85d472aa, __VMLINUX_SYMBOL_STR(queue_delayed_work_on) },
 	{ 0x2e5810c6, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr1) },
 	{ 0xf9a482f9, __VMLINUX_SYMBOL_STR(msleep) },
 	{ 0x68b76f37, __VMLINUX_SYMBOL_STR(gpiod_set_raw_value) },
@@ -45,4 +45,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "C58F5418DAE5AE45A64F312");
+MODULE_INFO(srcversion, "1F589FA3979884315B6021C");

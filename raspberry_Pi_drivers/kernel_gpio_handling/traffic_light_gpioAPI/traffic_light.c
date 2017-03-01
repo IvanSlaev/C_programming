@@ -49,16 +49,9 @@ static irqreturn_t irq_handler_gpio(int irq, void *dev_id)
 {
 	int ret;
 
-	led_wq = create_singlethread_workqueue(WQ_NAME);
-	if (led_wq) {
-		pr_info("WQ created\n");
-		ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
-		if (!ret) {
-			pr_err("work initialization failed\n");
-			return IRQ_NONE;
-		}
-	} else {
-		pr_err("No workqueue created\n");
+	ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
+	if (!ret) {
+		pr_err("work initialization failed\n");
 		return IRQ_NONE;
 	}
 	
@@ -102,6 +95,13 @@ static int __init my_init(void)
 	if (!irq) {
 		pr_err("gpio_to_irq failed \n");
 	}	
+
+	led_wq = create_singlethread_workqueue(WQ_NAME);
+	if (led_wq) {
+		pr_info("WQ created\n");
+	} else {
+		pr_err("No workqueue created\n");
+	}
 
 	ret = request_irq(irq, irq_handler_gpio, IRQF_ONESHOT, "button", NULL);
 	if (ret) {
