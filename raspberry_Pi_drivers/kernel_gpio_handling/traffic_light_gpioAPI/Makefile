@@ -1,10 +1,9 @@
 obj-m := traffic_light.o
 
-CROSS_COMP := ARCH=arm CROSS_COMPILE=~/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-
-KDIR := ~/raspberrypi/linux
+KDIR := ~/linux
 PWD := $(shell pwd)
 
 default:
-	$(MAKE) $(CROSS_COMP) -C $(KDIR) SUBDIRS=$(PWD) modules
+	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
 clean:
-	$(MAKE) $(CROSS_COMP) -C $(KDIR) SUBDIRS=$(PWD) clean
+	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) clean

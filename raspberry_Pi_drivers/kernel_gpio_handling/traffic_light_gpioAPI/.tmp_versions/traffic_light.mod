@@ -1,3 +1,3 @@
-/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.ko
-/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.o
+/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.ko
+/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.o
 

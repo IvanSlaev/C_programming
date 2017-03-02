@@ -1,8 +1,8 @@
-cmd_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o := ~/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-gcc -Wp,-MD,/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/.traffic_light.mod.o.d  -nostdinc -isystem /home/users/islaev/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/../lib/gcc/arm-linux-gnueabihf/4.8.3/include -I./arch/arm/include -I./arch/arm/include/generated/uapi -I./arch/arm/include/generated  -I./include -I./arch/arm/include/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-PIE -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -fno-ipa-sra -mabi=aapcs-linux -mno-thumb-interwork -mfpu=vfp -funwind-tables -marm -D__LINUX_ARM_ARCH__=7 -march=armv7-a -msoft-float -Uarm -fno-delete-null-pointer-checks -O2 -Wno-maybe-uninitialized --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -DCC_HAVE_ASM_GOTO  -DKBUILD_BASENAME='"traffic_light.mod"'  -DKBUILD_MODNAME='"traffic_light"' -DMODULE  -c -o /home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o /home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.c
+cmd_/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o := gcc -Wp,-MD,/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/.traffic_light.mod.o.d  -nostdinc -isystem /usr/lib/gcc/arm-linux-gnueabihf/4.9/include -I./arch/arm/include -I./arch/arm/include/generated/uapi -I./arch/arm/include/generated  -I./include -I./arch/arm/include/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-PIE -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -fno-ipa-sra -mabi=aapcs-linux -mno-thumb-interwork -mfpu=vfp -funwind-tables -marm -D__LINUX_ARM_ARCH__=7 -march=armv7-a -msoft-float -Uarm -fno-delete-null-pointer-checks -O2 --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -Werror=date-time -DCC_HAVE_ASM_GOTO  -DKBUILD_BASENAME='"traffic_light.mod"'  -DKBUILD_MODNAME='"traffic_light"' -DMODULE  -c -o /home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o /home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.c
 
-source_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o := /home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.c
+source_/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o := /home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.c
 
-deps_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o := \
+deps_/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o := \
     $(wildcard include/config/module/unload.h) \
   include/linux/module.h \
     $(wildcard include/config/modules.h) \
@@ -64,7 +64,7 @@ deps_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/
     $(wildcard include/config/mmu.h) \
     $(wildcard include/config/prove/locking.h) \
     $(wildcard include/config/panic/timeout.h) \
-  /home/users/islaev/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/lib/gcc/arm-linux-gnueabihf/4.8.3/include/stdarg.h \
+  /usr/lib/gcc/arm-linux-gnueabihf/4.9/include/stdarg.h \
   include/linux/linkage.h \
   include/linux/stringify.h \
   include/linux/export.h \
@@ -448,6 +448,6 @@ deps_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/
   include/linux/vermagic.h \
   include/generated/utsrelease.h \
 
-/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o: $(deps_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o)
+/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o: $(deps_/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o)
 
-$(deps_/home/users/islaev/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o):
+$(deps_/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/traffic_light_gpioAPI/traffic_light.mod.o):
