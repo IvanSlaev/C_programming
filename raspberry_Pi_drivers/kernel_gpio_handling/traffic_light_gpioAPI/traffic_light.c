@@ -107,7 +107,7 @@ static int __init my_init(void)
 		pr_err("No workqueue created\n");
 	}
 
-	ret = request_irq(irq, irq_handler_gpio, IRQF_TRIGGER_NONE, "button", NULL);
+	ret = request_irq(irq, irq_handler_gpio, IRQF_TRIGGER_MASK, "button", NULL);
 	if (ret) {
 		pr_err("irq request failed\n");
 	}
