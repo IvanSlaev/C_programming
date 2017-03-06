@@ -28,37 +28,26 @@ static DECLARE_DELAYED_WORK(led_w, work_handler);
 
 static void work_handler(struct work_struct *work)
 {
-	int ret;
-	pr_info("in work_handler\n");
-
-/*
-	while (1) {
-		ret = gpio_get_value(BUTTON);
-		if (ret) {
-			gpio_set_value(RED, 1);
-			msleep(1000);
-			gpio_set_value(RED, 0);
-			msleep(500);
-			gpio_set_value(GREEN, 1);
-			msleep(1000);
-			gpio_set_value(GREEN, 0);
-			break;
-		}
-	}
-	*/
+	msleep(2000);
+	gpio_set_value(GREEN, 1);
+	msleep(1000);
+	gpio_set_value(RED, 0);
+	msleep(4000);
+	gpio_set_value(RED, 1);
+	msleep(1000);
+	gpio_set_value(GREEN, 0);
 }
  
 static irqreturn_t irq_handler_gpio(int irq, void *dev_id)
 {
 	int ret;
-	pr_info("in irq_handler_gpio\n");
-/*
+	
 	ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
-	if (!ret) {
+	if (ret) {
 		pr_err("work initialization failed\n");
 		return IRQ_NONE;
 	}
-	*/
+
 	return IRQ_HANDLED;
 }
 
@@ -99,7 +88,7 @@ static int __init my_init(void)
 	if (!irq) {
 		pr_err("gpio_to_irq failed \n");
 	}	
-
+	
 	led_wq = create_singlethread_workqueue(WQ_NAME);
 	if (led_wq) {
 		pr_info("WQ created\n");
@@ -107,16 +96,19 @@ static int __init my_init(void)
 		pr_err("No workqueue created\n");
 	}
 
-	ret = request_irq(irq, irq_handler_gpio, IRQF_TRIGGER_MASK, "button", NULL);
+	ret = request_irq(irq, irq_handler_gpio, IRQF_TRIGGER_FALLING | IRQF_ONESHOT, "button", NULL);
 	if (ret) {
 		pr_err("irq request failed\n");
 	}
+	
+	gpio_set_value(RED, 1);
 
 	return 0;
 }
 
 static void __exit my_exit(void)
 {
+	gpio_set_value(RED, 0);
 	pr_info("before free red\n");
 	gpio_free(RED);
 	pr_info("before free button\n");
