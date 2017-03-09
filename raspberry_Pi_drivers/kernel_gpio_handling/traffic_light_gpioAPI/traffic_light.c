@@ -28,9 +28,6 @@ static DECLARE_DELAYED_WORK(led_w, work_handler);
 
 static void work_handler(struct work_struct *work)
 {
-	unsigned long flags;
-	local_irq_save(flags);
-
 	msleep(2000);
 	gpio_set_value(GREEN, 1);
 	msleep(1000);
@@ -39,20 +36,18 @@ static void work_handler(struct work_struct *work)
 	gpio_set_value(RED, 1);
 	msleep(1000);
 	gpio_set_value(GREEN, 0);
-
-	local_irq_restore(flags);
+	
+	
+	enable_irq(irq);
 }
  
 static irqreturn_t irq_handler_gpio(int irq, void *dev_id)
 {
 	int ret;
-	
-	ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
-	if (ret) {
-		pr_err("work initialization failed\n");
-		return IRQ_NONE;
-	}
 
+	ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
+
+	disable_irq_nosync(irq);
 	return IRQ_HANDLED;
 }
 
