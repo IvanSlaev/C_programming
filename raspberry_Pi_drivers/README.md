@@ -1,11 +1,10 @@
-Before using any programs presented here, please:
-1. Use the programs at your own responsibility.
-2. There is no warranty of not damaging your hardware
-provided with the schematics if any.
-3. All of the software is tested by me, but I am not responsible 
-for any issues that can occure during working.
-4. I am not responsible for any damages on your board,
-your PC, modules or any hardware you are using too.
+Before using the sources, please read this:
+
+1. Use them at your own responsibility.
+
+3. All of the software is tested by me, but I am not responsible for any issues that can occure during working.
+
+4. I am not responsible for any damages on your board, PC, external modules or any hardware you are using.
 
 CROSS COMPILATION for Raspbian kernel 4.9.y (thanks to www.grendelman.net)
 on your host x64 machine terminal:
