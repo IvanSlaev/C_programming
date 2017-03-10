@@ -27,10 +27,10 @@ make -j n ARCH=arm CROSS_COMPILE=~/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-
 make -j n ARCH=arm CROSS_COMPILE=~/raspberrypi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-
 
 Now you have a cross compiled linux kernel (in ~/raspberrypi/linux) and cross compilation tools (in ~/raspberrypi/tools).
-To compile modules against it you just need to use Makefiles in the module dirs.
+To compile modules against it you just need to use Makefiles.onhost(do not forget to specify the module name in Makefile).
 
 ONBOARD COMPILATION for Raspbian - see pandalion98's answer in:
 
 http://raspberrypi.stackexchange.com/questions/39845/how-compile-a-loadable-kernel-module-without-recompiling-kernel
 
-After you upgrade your kernel version and install sources, use Makefile.onboard instead of Makefiles in the module dirs.
+After you upgrade your kernel version and install sources, use Makefile.(do not forget to specify the module name in Makefile).
