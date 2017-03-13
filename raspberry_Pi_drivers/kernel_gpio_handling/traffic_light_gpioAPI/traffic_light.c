@@ -19,6 +19,7 @@ typedef enum {
 	TL_NORMAL,
 	TL_PEDESTRIAN
 } TL_STATE;
+TL_STATE tl_state = TL_NORMAL;
 
 static void switch_to_normal(void);
 static void switch_to_pedestrian(void);
@@ -35,13 +36,14 @@ static DECLARE_DELAYED_WORK(led_w, work_handler);
 
 static void switch_to_normal(void)
 {
+	tl_state = TL_NORMAL;
 	enable_irq(irq);
 }
 
 static void switch_to_pedestrian(void)
 {
 	int ret;
-
+	tl_state = TL_PEDESTRIAN;
 	disable_irq_nosync(irq);
 	ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
 }
