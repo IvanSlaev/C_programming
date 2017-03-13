@@ -13,11 +13,18 @@
 #define GREEN 27
 #define WQ_NAME "led_work_queue"
 #define WQ_HZ_DELAY HZ/10
-/*
-static struct gpio red_led_struct;
-static struct gpio green_led_struct;
-static struct gpio button_struct;
-*/
+#define MAX_STATES 4
+
+typedef enum TL_STATE{
+	TL_NORMAL,
+	TL_PEDESTRIAN
+} tl_state;
+
+static void switch_to_normal();
+static void switch_to_pedestrian();
+
+typedef void (*switch_state_func)();
+switch_state_func state_funcs[MAX_STATES] = { switch_to_normal, switch_to_pedestrian };
 
 static int irq;
 
@@ -25,6 +32,21 @@ static void work_handler(struct work_struct *work);
 
 static struct workqueue_struct *led_wq;
 static DECLARE_DELAYED_WORK(led_w, work_handler);
+
+static void switch_to_normal()
+{
+	tl_state = TL_NORMAL;
+	enable_irq(irq);
+}
+
+static void switch_to_pedestrian()
+{
+	int ret;
+
+	disable_irq_nosync(irq);
+	tl_state = TL_PEDESTRIAN;
+	ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
+}
 
 static void work_handler(struct work_struct *work)
 {
@@ -36,18 +58,15 @@ static void work_handler(struct work_struct *work)
 	gpio_set_value(RED, 1);
 	msleep(1000);
 	gpio_set_value(GREEN, 0);
-	
-	
-	enable_irq(irq);
+
+	state_funcs[TL_NORMAL];
+
 }
  
 static irqreturn_t irq_handler_gpio(int irq, void *dev_id)
 {
-	int ret;
+	state_funcs[TL_PEDESTRIAN];
 
-	ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
-
-	disable_irq_nosync(irq);
 	return IRQ_HANDLED;
 }
 
@@ -55,7 +74,7 @@ static int __init my_init(void)
 {
 	int ret;
 	pr_info("Module Raspberry Pi\n");
-
+	
 	/* Initialization */
 	ret = gpio_request(RED, "RED_LED");
 	if (ret) {
@@ -100,31 +119,27 @@ static int __init my_init(void)
 	if (ret) {
 		pr_err("irq request failed\n");
 	}
-	
+
 	gpio_set_value(RED, 1);
+
+	tl_state = TL_NORMAL;
 
 	return 0;
 }
 
 static void __exit my_exit(void)
 {
+	pr_info("Goodbye, Module Raspberry Pi\n");
+
 	gpio_set_value(RED, 0);
-	pr_info("before free red\n");
 	gpio_free(RED);
-	pr_info("before free button\n");
 	gpio_free(BUTTON);
-	pr_info("before free green\n");
 	gpio_free(GREEN);
-	pr_info("before work delay cancel\n");
 
 	cancel_delayed_work_sync(&led_w);
-	pr_info("before workq destroy\n");
 
 	destroy_workqueue(led_wq);
-	pr_info("before freeing irq\n");
 	free_irq(irq, NULL);
-
-	pr_info("Goodbye, Module Raspberry Pi\n");
 }
 
 module_init(my_init);
