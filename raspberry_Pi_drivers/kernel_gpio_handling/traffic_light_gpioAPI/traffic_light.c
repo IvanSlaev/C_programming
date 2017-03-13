@@ -15,15 +15,15 @@
 #define WQ_HZ_DELAY HZ/10
 #define MAX_STATES 4
 
-typedef enum TL_STATE{
+typedef enum {
 	TL_NORMAL,
 	TL_PEDESTRIAN
-} tl_state;
+} TL_STATE;
 
-static void switch_to_normal();
-static void switch_to_pedestrian();
+static void switch_to_normal(void);
+static void switch_to_pedestrian(void);
 
-typedef void (*switch_state_func)();
+typedef void (*switch_state_func)(void);
 switch_state_func state_funcs[MAX_STATES] = { switch_to_normal, switch_to_pedestrian };
 
 static int irq;
@@ -33,18 +33,16 @@ static void work_handler(struct work_struct *work);
 static struct workqueue_struct *led_wq;
 static DECLARE_DELAYED_WORK(led_w, work_handler);
 
-static void switch_to_normal()
+static void switch_to_normal(void)
 {
-	tl_state = TL_NORMAL;
 	enable_irq(irq);
 }
 
-static void switch_to_pedestrian()
+static void switch_to_pedestrian(void)
 {
 	int ret;
 
 	disable_irq_nosync(irq);
-	tl_state = TL_PEDESTRIAN;
 	ret = queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);
 }
 
@@ -59,13 +57,13 @@ static void work_handler(struct work_struct *work)
 	msleep(1000);
 	gpio_set_value(GREEN, 0);
 
-	state_funcs[TL_NORMAL];
+	state_funcs[TL_NORMAL]();
 
 }
  
 static irqreturn_t irq_handler_gpio(int irq, void *dev_id)
 {
-	state_funcs[TL_PEDESTRIAN];
+	state_funcs[TL_PEDESTRIAN]();
 
 	return IRQ_HANDLED;
 }
@@ -121,8 +119,6 @@ static int __init my_init(void)
 	}
 
 	gpio_set_value(RED, 1);
-
-	tl_state = TL_NORMAL;
 
 	return 0;
 }
