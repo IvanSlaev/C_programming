@@ -1,3 +1,0 @@
-/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/temp_sensor_driver/temp_sensor.ko
-/home/pi/C_programming/raspberry_Pi_drivers/kernel_gpio_handling/temp_sensor_driver/temp_sensor.o
-
