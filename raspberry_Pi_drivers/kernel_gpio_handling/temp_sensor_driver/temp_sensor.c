@@ -6,12 +6,15 @@
 #include <linux/delay.h>
 #include <linux/workqueue.h>
 
-#define READ_SCRATHPAD 0xBE
+#define SKIP_ROM 		0xCC
+#define READ_ROM 		0x33
+#define CONVERT_T 		0x44
+#define READ_SCRATHPAD 	0xBE
 
-#define PIN 4
-#define GPIO_NAME TEMP_PIN
-#define WQ_NAME "work_queue"
-#define WQ_HZ_DELAY HZ/10
+#define PIN 			4
+#define GPIO_NAME 		TEMP_PIN
+#define WQ_NAME 		"work_queue"
+#define WQ_HZ_DELAY 	HZ/10
 
 static void work_handler(struct work_struct *work);
 
@@ -44,12 +47,8 @@ static int master_reset(void)
 	gpio_direction_input(PIN);	/* release the bus */
 	udelay(60); 			/* wait for the maximum DS18B20 reaction time */
 	
-	if (gpio_get_value(PIN) == 0) {
-		pr_info("DS18B20 RESET\n");
-	}
-	else {
-		if (rc > 4)										/* try maximum 4 times */
-		{
+	if (gpio_get_value(PIN) != 0) {
+		if (rc > 4) {										/* try maximum 4 times */
 			pr_info("DS18B20 NOT reset, stop trying\n");
 			return 1;
 		}
@@ -59,20 +58,124 @@ static int master_reset(void)
 		queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);		/* try again */
 	}
 	
+	udelay(480);
+	
 	return 0;
 }
 
-/*
-static uint_8 read_bit(void)
+static void write_bit(uint8_t bit)
 {
-	
-}	
-*/
-static void work_handler(struct work_struct *work)
-{
-	master_reset();
+	if (bit) {
+		gpio_direction_output(PIN, 0); 	/* pull the bus low */
+		udelay(1);						/* for at least 1 microsecond */
+		gpio_direction_input(PIN);		/* release the bus */
+		udelay(61); 					/* wait for the min pull up resistor time required by DS18B20*/
+	}
+	else {
+		gpio_direction_output(PIN, 0); 	/* pull the bus low */
+		udelay(60);						/* for at least 60 microsecond */
+		gpio_direction_input(PIN);	/* release the bus */
+		udelay(2); 					/* wait for enough time for the resistor to pull up */
+	}
 }
 
+static uint8_t read_bit(void)
+{
+	uint8_t bit;
+	gpio_direction_output(PIN, 0); 	/* pull the bus low */
+	udelay(1);						/* for 2 microsecond */
+	gpio_direction_input(PIN);		/* release the bus */
+	udelay(13);
+	
+	if (gpio_get_value(PIN)) {	/* sample the bus for 0 if DS18B20 give 0 (stuck the bus low) and 1 if sensor give 1 (release the bus) */
+		bit = 1;
+		udelay(47);				/* wait for DS18B20 to release the buss */
+	}
+	else {
+		bit = 0;
+		udelay(47);				/* 47 more microseconds to be sure the bus is pulled up by the resistor and not touched by DS18B20 */
+	}
+	return bit;
+}	
+
+static void write_command(uint8_t command)
+{
+	int i;
+	int mask;
+
+	mask = 1;
+	
+	for (i = 0; i < 8; i++)
+	{
+		write_bit((command >> i) & mask);
+	}
+}
+
+static uint64_t read_rom(void)
+{
+	int i;
+	uint64_t rom;
+	rom = 0;
+	
+	for (i = 0; i < 64; i++)
+	{
+		rom |= (read_bit() << i);
+	}
+	pr_err("ROM VALUE: %ld\n", (long)rom); /*not an err fust for readability in dmesg */
+	
+	return rom;
+}	
+
+static uint16_t read_temp(void)
+{
+	int i;
+	uint16_t temp;
+	temp = 0;
+	
+	for (i = 0; i < 16; i++)
+	{
+		temp |= (read_bit() << i);
+	}
+	pr_err("TEMPERATURE VALUE: 0x%x\n", temp); /* raw hex value in kernel module only, not an err fust for readability in dmesg */
+	return temp;
+}
+
+static void work_handler(struct work_struct *work)
+{
+	/* read ROM */
+	if (master_reset())
+	{
+		return;
+	}
+	write_command(READ_ROM);
+	read_rom();
+	mdelay(1);
+	
+	/* init convertion */
+	if (master_reset())
+	{
+		return;
+	}
+	write_command(SKIP_ROM);
+	write_command(CONVERT_T);
+	while (read_bit() == 0)
+	{
+		mdelay(1);
+	}
+	
+	/* when ready, read temp */
+	if (master_reset())
+	{
+		return;
+	}
+	write_command(SKIP_ROM);
+	write_command(READ_SCRATHPAD);
+	read_temp();
+	if (master_reset())
+	{
+		return;
+	}
+}
 
 static int __init my_init(void)
 {
