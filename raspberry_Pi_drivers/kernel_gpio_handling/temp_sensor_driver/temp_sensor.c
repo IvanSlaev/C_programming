@@ -48,13 +48,13 @@ static int master_reset(void)
 	udelay(60); 			/* wait for the maximum DS18B20 reaction time */
 	
 	if (gpio_get_value(PIN) != 0) {
-		if (rc > 4) {										/* try maximum 4 times */
+		if (rc > 4) {							/* try maximum 4 times */
 			pr_info("DS18B20 NOT reset, stop trying\n");
 			return 1;
 		}
 		
 		pr_info("DS18B20 NOT reset, try again in 420 milisecond\n");
-		udelay(480);											/* wait for the maximum DS18B20 signal time before retry reset */
+		udelay(480);							/* wait for the maximum DS18B20 signal time before retry reset */
 		queue_delayed_work(led_wq, &led_w, WQ_HZ_DELAY);		/* try again */
 	}
 	
@@ -67,15 +67,15 @@ static void write_bit(uint8_t bit)
 {
 	if (bit) {
 		gpio_direction_output(PIN, 0); 	/* pull the bus low */
-		udelay(1);						/* for at least 1 microsecond */
-		gpio_direction_input(PIN);		/* release the bus */
-		udelay(61); 					/* wait for the min pull up resistor time required by DS18B20*/
+		udelay(1);			/* for at least 1 microsecond */
+		gpio_direction_input(PIN);	/* release the bus */
+		udelay(61); 			/* wait for the min pull up resistor time required by DS18B20*/
 	}
 	else {
 		gpio_direction_output(PIN, 0); 	/* pull the bus low */
-		udelay(60);						/* for at least 60 microsecond */
+		udelay(60);			/* for at least 60 microsecond */
 		gpio_direction_input(PIN);	/* release the bus */
-		udelay(2); 					/* wait for enough time for the resistor to pull up */
+		udelay(2); 			/* wait for enough time for the resistor to pull up */
 	}
 }
 
@@ -83,17 +83,17 @@ static uint8_t read_bit(void)
 {
 	uint8_t bit;
 	gpio_direction_output(PIN, 0); 	/* pull the bus low */
-	udelay(1);						/* for 2 microsecond */
-	gpio_direction_input(PIN);		/* release the bus */
+	udelay(1);			/* for 2 microsecond */
+	gpio_direction_input(PIN);	/* release the bus */
 	udelay(13);
 	
 	if (gpio_get_value(PIN)) {	/* sample the bus for 0 if DS18B20 give 0 (stuck the bus low) and 1 if sensor give 1 (release the bus) */
 		bit = 1;
-		udelay(47);				/* wait for DS18B20 to release the buss */
+		udelay(47);		/* wait for DS18B20 to release the buss */
 	}
 	else {
 		bit = 0;
-		udelay(47);				/* 47 more microseconds to be sure the bus is pulled up by the resistor and not touched by DS18B20 */
+		udelay(47);		/* 47 more microseconds to be sure the bus is pulled up by the resistor and not touched by DS18B20 */
 	}
 	return bit;
 }	
@@ -121,7 +121,7 @@ static uint64_t read_rom(void)
 	{
 		rom |= (read_bit() << i);
 	}
-	pr_err("ROM VALUE: %ld\n", (long)rom); /*not an err fust for readability in dmesg */
+	pr_err("ROM VALUE: %ld\n", (long)rom); /*not an err just for readability in dmesg */
 	
 	return rom;
 }	
@@ -136,7 +136,7 @@ static uint16_t read_temp(void)
 	{
 		temp |= (read_bit() << i);
 	}
-	pr_err("TEMPERATURE VALUE: 0x%x\n", temp); /* raw hex value in kernel module only, not an err fust for readability in dmesg */
+	pr_err("TEMPERATURE VALUE: 0x%x\n", temp); /* raw hex value in kernel module only, not an err just for readability in dmesg */
 	return temp;
 }
 
